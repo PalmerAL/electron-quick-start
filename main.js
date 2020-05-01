@@ -11,12 +11,20 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      nodeIntegration: false,
+      nodeIntegrationInSubFrames: true,
+      preload: __dirname + '/preload.js',
+      contextIsolation: true,
+      sandbox: true,
+      enableRemoteModule: false,
+      partition: 'test'
     }
   })
 
   // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadURL('https://bing.com')
+
+  mainWindow.webContents.on('crashed', () => { console.error('renderer crashed') })
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
