@@ -11,12 +11,20 @@ function createWindow () {
     width: 800,
     height: 600,
     webPreferences: {
-      nodeIntegration: true
+      sandbox: true,
+      contextIsolation: true
     }
   })
 
-  // and load the index.html of the app.
-  mainWindow.loadFile('index.html')
+  mainWindow.loadURL('https://twitter.com/electronjs')
+
+  mainWindow.webContents.on('new-window', function (e) {
+    e.preventDefault()
+  })
+
+  mainWindow.webContents.on('crashed', function (e) {
+    console.log('window crashed')
+  })
 
   // Open the DevTools.
   // mainWindow.webContents.openDevTools()
